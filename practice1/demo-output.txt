@@ -1,0 +1,30 @@
+=== URL Monitor ===
+
+Level 1: Sequential
+http://127.0.0.1:44457/home | 200 OK | 123ms
+http://127.0.0.1:44457/api | 200 OK | 181ms
+http://127.0.0.1:44457/missing | 404 Not Found | 91ms
+http://127.0.0.1:44457/offline | 503 Service Unavailable | 151ms
+invalid-url | error: Get "invalid-url": unsupported protocol scheme "" | 0s
+Total: 5 | OK: 2 | Other HTTP: 2 | Errors: 1
+Time: 545ms
+
+Level 2: Goroutines + Mutex
+invalid-url | error: Get "invalid-url": unsupported protocol scheme "" | 0s
+http://127.0.0.1:44457/missing | 404 Not Found | 92ms
+http://127.0.0.1:44457/home | 200 OK | 123ms
+http://127.0.0.1:44457/offline | 503 Service Unavailable | 152ms
+http://127.0.0.1:44457/api | 200 OK | 182ms
+Total: 5 | OK: 2 | Other HTTP: 2 | Errors: 1
+Time: 182ms
+
+Level 3: Channels
+invalid-url | error: Get "invalid-url": unsupported protocol scheme "" | 0s
+http://127.0.0.1:44457/missing | 404 Not Found | 96ms
+http://127.0.0.1:44457/home | 200 OK | 122ms
+http://127.0.0.1:44457/offline | 503 Service Unavailable | 151ms
+http://127.0.0.1:44457/api | 200 OK | 181ms
+Total: 5 | OK: 2 | Other HTTP: 2 | Errors: 1
+Time: 181ms
+
+Speedup: 3.01x
